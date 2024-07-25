@@ -129,7 +129,7 @@ Copy to sdcard
 
 ```bash
 cp arch/arm/boot/zImage /media/boot
-cp arch/arm/boot/dts/bcm2710-rpi-3-b.dtb /media/boot
+cp arch/arm/boot/dts/broadcom/bcm2710-rpi-3-b.dtb /media/boot
 cp arch/arm/boot/dts/overlays/disable-bt.dtbo /media/boot/overlays
 ```
 
@@ -175,7 +175,7 @@ make menuconfig
 
 - Enable build static binary
 
-- Configure ``` arm-Linux-gnueabihf- ```  as cross compiler prefix
+- Configure ``` arm-linux-gnueabihf- ```  as cross compiler prefix
 
   
 
@@ -271,7 +271,6 @@ Copy uRamdisk you created earlier in this section to the boot partition on the m
 
 ```bash
 # make sure the variable initramfs doesn't overwrite the dtb and zimage variables
-setenv initramfs [chose a value depends on bdinfo]
 
 setenv initramfs_addr 0x30000000
 setenv kernel_addr_r 0x8000
@@ -280,7 +279,7 @@ setenv fdt_addr_r 0x10000
 fatload mmc 0:1 $kernel_addr_r zImage
 fatload mmc 0:1 $fdt_addr_r bcm2710-rpi-3-b.dtb
 fatload mmc 0:1 $initramfs uRamdisk
-setenv bootargs console=ttyS0,115200 root=/dev/ram0 init=/linuxrc
+setenv bootargs console=ttyS0,115200 root=/dev/mmcblk0p2 init=/linuxrc
 
 bootz $kernel_addr_r $initramfs $fdt_addr
 ```
